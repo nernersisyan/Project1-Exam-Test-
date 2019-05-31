@@ -1,0 +1,101 @@
+<div class="container-fluid position-absolute">
+
+  <div class="row">
+
+    <div class="col-6 offset-3 shadow-lg">
+
+      <hr>
+      <h3 class="text-center">Մաղթում ենք հաջողություն</h3>
+      <hr>
+
+      <form [formGroup]="form1" (ngSubmit)="start()">
+
+        <div class="form-group">
+          <b>Անուն</b>
+          <input type="text" placeholder="Մուտքագրեք Ձեր անունը" class="form-control" formControlName="name" [readonly]="bool1" [(ngModel)]="name">
+        </div>
+
+        <div class="form-group">
+          <b>Ազգանուն</b>
+          <input type="text" placeholder="Մուտքագրեք Ձեր ազգանունը" class="form-control" formControlName="lastName" [readonly]="bool1" [(ngModel)]="surname">
+        </div>
+
+        <div class="form-group">
+          <b>Հայրանուն</b>
+          <input type="text" placeholder="Մուտքագրեք Ձեր հայրանունը" class="form-control" formControlName="fathersName" [readonly]="bool1" [(ngModel)]="fathersName">
+        </div>
+
+        <div class="form-group">
+          <b>Կազմակերպության անվանում</b>
+          <input type="text" class="form-control" placeholder="Մուտքագրեք Ձեր կազմակերպության անվանումը" formControlName="organizationName" [readonly]="bool1"[(ngModel)]="orgName" >
+        </div>
+
+        <hr>
+        <div class="text-center">
+          <button  class="btn btn-success startButtonColor" type="submit" (click)="timer()"  [hidden]="bool1" [disabled]="form1.invalid">Սկսել թեստը</button>
+        </div>
+      </form>
+
+      <div *ngFor="let test of data">
+        <div *ngFor="let k of test; let i=index">
+
+          <form [formGroup]='form2' class="form-group" >
+            <ul class="list-group " >
+              <fieldset [disabled]="bool2">
+
+                <li class="list-group-item qNColor  ">
+                  <h3>ՀԱՐՑ {{i+1}}</h3>
+                </li>
+                <li class="list-group-item qColor">
+                  <h5>{{k.question}}</h5>
+                </li>
+                <li class="list-group-item aColor">
+                  <p><input type="radio" [value]="k.answer1" name="radioJan{{i}}" formControlName="radioJan{{i}}">
+                    {{k.answer1}}
+                  </p>
+                </li>
+                <li class="list-group-item aColor">
+                  <p><input type="radio" [value]="k.answer2" name="radioJan{{i}}" formControlName="radioJan{{i}}">
+                    {{k.answer2}}
+                  </p>
+                </li>
+                <li class="list-group-item aColor">
+                  <p><input type="radio" [value]="k.answer3" name="radioJan{{i}}" formControlName="radioJan{{i}}">
+                  {{k.answer3}}
+                </p>
+                </li>
+
+              </fieldset>
+            </ul>
+          </form>
+
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button class="btn btn-danger finishButtonColor" (click)="finish()" [hidden]="bool3">Ավարտել թեստը
+        </button>
+      </div>
+
+      <div *ngIf="printAnswer">
+        <b>Ճիշտ պատասխանների քանակը <u>{{ counter }} / 6-ից</u></b>
+        <hr>
+        <div *ngFor="let x of data[0]; let i=index">
+          <i>ՀԱՐՑ {{i+1 + " : "}}</i>
+          <i>{{x.question}} </i>
+          <p><b>{{showAnswers[i]}}</b></p>
+          <hr>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-3" class="timerDesign"  [ngClass]="{'dangerTime': dangerTime()}">
+      <p><span [ngClass]="{'clear': bool4}">{{m + ":"}}</span>
+        <span [ngClass]="{'clear': bool4}">{{s}}</span>
+      </p>
+    </div>
+
+  </div>
+
+</div>
