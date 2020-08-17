@@ -9,11 +9,11 @@ export class TestsService {
   constructor(private http: HttpClient) {
   }
 
-  getTests() {
+  getTests(): any {
     return this.http.get('http://localhost:3000/source');
   }
 
-  addData(name, surname, fathersname, orgName, item, counter, showAnswers) {
+  addData(name, surname, fathersname, orgName, item, counter, showAnswers): any {
     let newData = {
       'name': name,
       'surname': surname,
@@ -29,8 +29,7 @@ export class TestsService {
         'question6': showAnswers[5],
         'points': counter
       }
-  }
-    ;
+  };
     return this.http.post('http://localhost:3000/personalInfo', newData);
 
   }
